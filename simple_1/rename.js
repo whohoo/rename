@@ -2,10 +2,12 @@
 var fs = require('fs');
 var path = require('path');
 
-//把DESTINATION_FOLDER目录下的文件按要求重命名
-const DESTINATION_FOLDER = "./";//"./"表示当前目录， 如果要指定子目录，可以这样写"./subfolder"
-
+/***** 把new-filename_改为你想要重命名的文件 ******/
 const NEW_FILENAME = "new-filename_";//要把DESTINATION_FOLDER目录下的文件名改为, 定义你想要的文件名
+
+//把DESTINATION_FOLDER目录下的文件按要求重命名
+const DESTINATION_FOLDER = path.resolve(__dirname, "");//""空字符串表示当前目录(rename.js所在的目录)， 如果要指定子目录，可以这样写"subfolder/sub-subfolder"
+
 
 try{
     //得到DESTINATION_FOLDER目录下的所有文件
@@ -14,17 +16,17 @@ try{
     console.error(err.message);
 }
 
-
 //如果fs.readdirSync方法没有抛出异常报错，
 if(fileArray!=null){
     //循环DESTINATION_FOLDER目录下所有文件
     fileArray.forEach((file, index)=>{
-        var absolutePath  = path.resolve(DESTINATION_FOLDER, file);//得到DESTINATION_FOLDER目录下文件的绝对路径
-        if(absolutePath==__filename) return;//不包括rename.js文件, __filename变量名是系统定义的，其值就是当前执行的JS文件， 也就是"rename.js"
-        var ext = path.extname(absolutePath);//获取文件后缀名
+        var oldFilePath  = path.resolve( DESTINATION_FOLDER, file);//得到DESTINATION_FOLDER目录下文件的绝对路径
+        if(fs.statSync(oldFilePath).isDirectory()) return;//跳过目录里子目录， 不重命名子子目录
+        if(oldFilePath==__filename) return;//不包括rename.js文件, __filename变量名是系统定义的，其值就是当前执行的JS文件， 也就是"rename.js"
+        var ext = path.extname(oldFilePath);//获取文件后缀名
         var newPath = path.resolve(DESTINATION_FOLDER, NEW_FILENAME + index);//输出的新文件名+序号
-        fs.renameSync(absolutePath, newPath + ext);
-        console.log(`${absolutePath} ==> ${newPath + ext}`);
+        fs.renameSync(oldFilePath, newPath + ext);
+        console.log(`${oldFilePath} ==> ${newPath + ext}`);
     });
     console.log("Rename Done!");
 }

@@ -18,13 +18,15 @@ try{
 
 //如果fs.readdirSync方法没有抛出异常报错，
 if(fileArray!=null){
+    var index = 1;//从1开始
     //循环DESTINATION_FOLDER目录下所有文件
-    fileArray.forEach((file, index)=>{
+    fileArray.forEach((file)=>{
         var oldFilePath  = path.resolve( DESTINATION_FOLDER, file);//得到DESTINATION_FOLDER目录下文件的绝对路径
         if(fs.statSync(oldFilePath).isDirectory()) return;//跳过目录里子目录， 不重命名子子目录
         if(oldFilePath==__filename) return;//不包括rename.js文件, __filename变量名是系统定义的，其值就是当前执行的JS文件， 也就是"rename.js"
         var ext = path.extname(oldFilePath);//获取文件后缀名
         var newPath = path.resolve(DESTINATION_FOLDER, NEW_FILENAME + index);//输出的新文件名+序号, 在这里定义新的新文件名规则
+        index++;//相当于index = index+1
         fs.renameSync(oldFilePath, newPath + ext);
         console.log(`${oldFilePath} ==> ${newPath + ext}`);
     });

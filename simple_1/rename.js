@@ -24,7 +24,7 @@ if(fileArray!=null){
         if(fs.statSync(oldFilePath).isDirectory()) return;//跳过目录里子目录， 不重命名子子目录
         if(oldFilePath==__filename) return;//不包括rename.js文件, __filename变量名是系统定义的，其值就是当前执行的JS文件， 也就是"rename.js"
         var ext = path.extname(oldFilePath);//获取文件后缀名
-        var newPath = path.resolve(DESTINATION_FOLDER, NEW_FILENAME + index);//输出的新文件名+序号
+        var newPath = path.resolve(DESTINATION_FOLDER, NEW_FILENAME + index);//输出的新文件名+序号, 在这里定义新的新文件名规则
         fs.renameSync(oldFilePath, newPath + ext);
         console.log(`${oldFilePath} ==> ${newPath + ext}`);
     });

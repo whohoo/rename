@@ -3,7 +3,7 @@ var fs = require('fs');
 var path = require('path');
 
 /***** 把new-filename_改为你想要重命名的文件 ******/
-const NEW_FILENAME = "test-filename_";//要把DESTINATION_FOLDER目录下的文件名改为, 定义你想要的文件名
+const NEW_FILENAME = "new-filename_";//要把DESTINATION_FOLDER目录下的文件名改为, 定义你想要的文件名
 
 //把DESTINATION_FOLDER目录下的文件按要求重命名
 const DESTINATION_FOLDER = path.resolve(__dirname, "");//""空字符串表示当前目录(rename.js所在的目录)， 如果要指定子目录，可以这样写"subfolder/sub-subfolder"

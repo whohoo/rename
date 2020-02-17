@@ -15,4 +15,4 @@ function createEmtpyFiles(filename, num){
     
 }
 
-createEmtpyFiles("./simple_1/test_%num%.txt", 6);
+createEmtpyFiles("../simple_1/test_%num%.txt", 6);
